@@ -46,12 +46,13 @@ odoo.define('pos_keyboard.pos', function (require) {
 
     PopupWidget.include({
         keypad_action: function(data){
+            var barcode_scanned = this.options.barcode
             var type = this.pos.keypad.type;
             if (data.type === type.numchar){
                 this.click_keyboard(data.val);
             } else if (data.type === type.backspace){
                 this.click_keyboard('BACKSPACE');
-            } else if (data.type === type.enter){
+            } else if (data.type === type.enter && !barcode_scanned){
                 // some pop-ups might throw an error due to lack of some income data
                 try {
                     return this.click_confirm();
